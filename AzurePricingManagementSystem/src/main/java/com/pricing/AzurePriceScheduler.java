@@ -17,7 +17,7 @@ public class AzurePriceScheduler {
     /**
      * Runs automatically every Monday at 10:00 AM IST
      */
-    @Scheduled(cron = "0 */1 * * * *", zone = "Asia/Kolkata")
+    @Scheduled(cron = "0 0 10 ? * MON", zone = "Asia/Kolkata")
     public void scheduleWeeklyUpload() {
         System.out.println("📅 Starting scheduled Azure pricing upload to S3...");
 

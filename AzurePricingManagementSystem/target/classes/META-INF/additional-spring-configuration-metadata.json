@@ -28,5 +28,30 @@
     "name": "aws.region",
     "type": "java.lang.String",
     "description": "A description for 'aws.region'"
+  },
+  {
+    "name": "azure.retail.max-records",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.retail.max-records'"
+  },
+  {
+    "name": "azure.retail.url",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.retail.url'"
+  },
+  {
+    "name": "azure.retail.source",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.retail.source'"
+  },
+  {
+    "name": "aws.s3.offline.url",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.s3.offline.url'"
+  },
+  {
+    "name": "azure.api.max.pages",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.api.max.pages'"
   }
 ]}
