@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pricing.model.AzureFetchRequestDTO;
 import com.pricing.model.AzureFetchResponseDTO;
+import com.pricing.service.AzurePriceProcessorService;
 import com.pricing.service.AzurePriceService;
 
 @RestController
@@ -18,6 +19,9 @@ public class AzurePriceController {
 
 	@Autowired
     private AzurePriceService service;
+	
+	@Autowired
+    private AzurePriceProcessorService azurePriceProcessorService;
 
     // 1️⃣ Trigger fetch and upload (optionally with custom URL)
     @PostMapping("/fetch-upload")
@@ -31,6 +35,38 @@ public class AzurePriceController {
     @GetMapping("/status")
     public String status() {
         return "Azure Pricing Fetch Service is running!";
+    }
+    
+    /**
+     * 🔹 Trigger the processing manually via API
+     * Example: GET http://localhost:8080/api/azure/pricing/process
+     */
+    @GetMapping("/process")
+    public ResponseEntity<String> processAndUploadPricing() {
+        try {
+            String s3Url = azurePriceProcessorService.processAndUploadPricingSheet();
+            return ResponseEntity.ok("✅ Processed pricing uploaded to: " + s3Url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError()
+                    .body("❌ Failed to process pricing sheet: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 🔹 (Optional) Endpoint to refresh the cache only.
+     * Example: GET http://localhost:8080/api/azure/pricing/cache-refresh
+     */
+    @GetMapping("/cache-refresh")
+    public ResponseEntity<String> refreshCache() {
+        try {
+            azurePriceProcessorService.processAndUploadPricingSheet();
+            return ResponseEntity.ok("✅ Cache refreshed and processed pricing uploaded.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError()
+                    .body("❌ Failed to refresh cache: " + e.getMessage());
+        }
     }
 
 }
